@@ -15,7 +15,7 @@ def ecg_clean_up(df, column='L PECTORALIS MAJOR: EKG 16'):
     ecg_t = df.iloc[:, df.columns.get_loc(column)-1][start:-end].reset_index(drop=True)
     out = pd.concat([ecg_t.round(5), ecg],axis=1)
     out.columns = ['time','ecg']
-    out['time'] = pd.to_datetime(out['time'], unit = 's')
+    #out['time'] = pd.to_datetime(out['time'], unit = 's')
     return out
     
 def resample(all_data, oversampling_period, undersampling_period, time_col = 'time'):
