@@ -35,3 +35,11 @@ def resample(all_data, oversampling_period, undersampling_period, time_col = 'ti
     #resampled = resampled.drop(['time'],axis= 1)
       
     return resampled
+
+def cutting(input,dt):
+    pos = next(x for x, val in enumerate(input['time']) if val >= dt) 
+    out = input[pos::]
+    out.reset_index(inplace =True)
+    out = out.drop(columns=['index'])
+    out['time'] = out['time']-dt
+    return out
