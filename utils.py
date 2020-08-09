@@ -7,15 +7,23 @@ def load_data(file_name,data_dir='csv', gdrive=True):
     return df
 
 def delsys_cleanup(df, column='L PECTORALIS MAJOR: EKG 16'):
-    df = df.fillna(0.0)
-    
-    start = np.where(np.diff(df[column])!=0)[0][0]+1
-    end = np.where(np.diff(df[column][-1:0:-1])!=0)[0][0]+1
-    ecg = df[column][start:-end].reset_index(drop=True)
-    ecg_t = df.iloc[:, df.columns.get_loc(column)-1][start:-end].reset_index(drop=True)
-    out = pd.concat([ecg_t.round(5), ecg],axis=1)
-    out.columns = ['time','ecg']
-    #out['time'] = pd.to_datetime(out['time'], unit = 's')
+    'this function cleans up data that is coming from the delsys system'
+    if column == 'all':
+        df = df.fillna(0.0)
+        start = np.where(np.diff(df)!=0)[0][0]+1
+        end = np.where(np.diff(df[-1:0:-1])!=0)[0][0]+1
+        df = df[start:-end].reset_index(drop=True)
+        out = pd.concat([df.round(5), df],axis=1)
+        
+    else:
+        df = df.fillna(0.0)
+        start = np.where(np.diff(df[column])!=0)[0][0]+1
+        end = np.where(np.diff(df[column][-1:0:-1])!=0)[0][0]+1
+        ecg = df[column][start:-end].reset_index(drop=True)
+        ecg_t = df.iloc[:, df.columns.get_loc(column)-1][start:-end].reset_index(drop=True)
+        out = pd.concat([ecg_t.round(5), ecg],axis=1)
+        out.columns = ['time','ecg']
+        #out['time'] = pd.to_datetime(out['time'], unit = 's')
     return out
     
 def resample(all_data, oversampling_period, undersampling_period, time_col = 'time'):
