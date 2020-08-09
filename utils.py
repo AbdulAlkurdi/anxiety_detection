@@ -6,7 +6,7 @@ def load_data(file_name,data_dir='csv', gdrive=True):
     df = pd.read_csv(file)
     return df
 
-def ecg_clean_up(df, column='L PECTORALIS MAJOR: EKG 16'):
+def delsys_cleanup(df, column='L PECTORALIS MAJOR: EKG 16'):
     df = df.fillna(0.0)
     
     start = np.where(np.diff(df[column])!=0)[0][0]+1
