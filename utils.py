@@ -45,6 +45,11 @@ def resample(all_data, oversampling_period, undersampling_period, time_col = 'ti
     return resampled
 
 def cutting(input,dt):
+    """
+    this code cute the data and shift the index and the timesteps based on the time difference between two local time.
+    dt caculated based on the time sync .txt files,
+    input is the data you would like to cut
+    """
     pos = next(x for x, val in enumerate(input['time']) if val >= dt) 
     out = input[pos::]
     out.reset_index(inplace =True)
