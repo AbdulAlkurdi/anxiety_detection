@@ -13,7 +13,8 @@ def delsys_cleanup(df, column='L PECTORALIS MAJOR: EKG 16'):
         start = np.where(np.diff(df)!=0)[0][0]+1
         end = np.where(np.diff(df[-1:0:-1])!=0)[0][0]+1
         df = df[start:-end].reset_index(drop=True)
-        out = pd.concat([df.round(5), df],axis=1)
+        #out = pd.concat([df.round(5), df],axis=1)
+        out = df
         
     else:
         df = df.fillna(0.0)
